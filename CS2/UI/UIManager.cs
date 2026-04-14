@@ -9,11 +9,11 @@ namespace AliceInCradle
         public bool IsVisible { get; set; } = false;
 
         private readonly ConfigManager _config;
-        private Rect _windowRect = new Rect(20, 20, 450, 600); // 调整了窗口大小以容纳所有选项
+        private Rect _windowRect = new Rect(20, 20, 450, 615); // 调整了窗口大小以容纳所有选项
 
         // 用于临时存储输入框内容的字符串变量
         private string _heroStr, _holdMsStr, _eroHStr;
-        private string _hpMultiplierStr, _mpMultiplierStr, _epMultiplierStr;
+        private string _hpMultiplierStr, _mpMultiplierStr, _epMultiplierStr, _epRateMultiplierStr;
         private string _maxChangeStr, _checkIntervalStr, _reductionValueStr, _lowestStr;
 
         public UIManager(ConfigManager config)
@@ -26,6 +26,7 @@ namespace AliceInCradle
             _hpMultiplierStr = config.HpReductionMultiplier.Value.ToString("0.0#"); // 格式化浮点数
             _mpMultiplierStr = config.MpReductionMultiplier.Value.ToString("0.0#");
             _epMultiplierStr = config.EpReductionMultiplier.Value.ToString("0.0#");
+            _epRateMultiplierStr = config.EpReductionRateMultiplier.Value.ToString("0.0#");
             _maxChangeStr = config.MaxChange.Value.ToString();
             _checkIntervalStr = config.CheckIntervalMs.Value.ToString();
             _reductionValueStr = config.ReductionValue.Value.ToString();
@@ -61,6 +62,7 @@ namespace AliceInCradle
             DrawFloatField("HP减少转化倍率（0.1 为 10滴血增加1强度）:", ref _hpMultiplierStr, _config.HpReductionMultiplier);
             DrawFloatField("MP减少转化倍率（0.1 为 10滴蓝增加1强度）:", ref _mpMultiplierStr, _config.MpReductionMultiplier);
             DrawFloatField("EP增加转化倍率（1 为 10兴奋度增加1强度，会与上叠加，建议设置在1以下）:", ref _epMultiplierStr, _config.EpReductionMultiplier);
+            DrawFloatField("EP自然增加强度倍率（1 为 10兴奋度增加1强度，会与自然下降值叠加，建议设置在0.1以下）:", ref _epRateMultiplierStr, _config.EpReductionRateMultiplier);
             DrawIntField("强度生效上限（例一次扣超过200血/蓝/兴奋度时不会提升强度）:", ref _maxChangeStr, _config.MaxChange);
             GUILayout.Space(15);
 
