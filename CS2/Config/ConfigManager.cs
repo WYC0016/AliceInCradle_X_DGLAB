@@ -14,6 +14,7 @@ namespace AliceInCradle
         public ConfigEntry<float> HpReductionMultiplier { get; private set; }
         public ConfigEntry<float> MpReductionMultiplier { get; private set; }
         public ConfigEntry<float> EpReductionMultiplier { get; private set; }
+        public ConfigEntry<float> EpReductionRateMultiplier { get; private set; }
         public ConfigEntry<int> MaxChange { get; private set; }
         public ConfigEntry<int> CheckIntervalMs { get; private set; }
         public ConfigEntry<int> ReductionValue { get; private set; }
@@ -37,12 +38,12 @@ namespace AliceInCradle
             // --- 倍率设置 ---
             HpReductionMultiplier = config.Bind("3. 强度倍率", "HP减少转化倍率", 0.3f, "每减少1点HP，转化为强度的倍率 (例如0.3代表增加0.3强度)。");
             MpReductionMultiplier = config.Bind("3. 强度倍率", "MP减少转化倍率", 0.1f, "每减少1点MP，转化为强度的倍率 (例如0.1代表增加0.1强度)。");
-            EpReductionMultiplier = config.Bind("3. 强度倍率", "EP增加转化倍率", 0.7f, "每增加10点EP(兴奋度)，转化为强度的倍率 (例如0.7代表增加0.7强度)。");
+            EpReductionMultiplier = config.Bind("3. 强度倍率", "EP增加转化倍率", 0f, "每增加10点EP(兴奋度)，转化为强度的倍率 (例如0.7代表增加0.7强度)。");
+            EpReductionRateMultiplier = config.Bind("3. 强度倍率", "EP增加转化强度自动增加倍率", 0.02f, "每增加10点EP(兴奋度)，转化为强度自动增加的倍率 (例如0.02代表增加0.02强度)。");
             MaxChange = config.Bind("3. 强度倍率", "单次变化生效上限", 200, "单次状态变化（HP/MP/EP）的数值如果超过此上限，则不会触发强度变化，用以防止数据异常。");
-
             // --- 强度自然衰减 ---
             CheckIntervalMs = config.Bind("4. 强度衰减", "衰减间隔 (ms)", 1000, "无事件发生时，每隔多少毫秒减少一次强度。");
-            ReductionValue = config.Bind("4. 强度衰减", "每次衰减值", 1, "每次衰减时减少的强度值。");
+            ReductionValue = config.Bind("4. 强度衰减", "每次衰减值", 3, "每次衰减时减少的强度值。");
 
             // --- 实验性功能 ---
             Lowest = config.Bind("5. 实验性", "(已废弃)最低增强值", 0, "现已被兴奋度系统取代。如需使用会和兴奋度叠加。设为0关闭。");
