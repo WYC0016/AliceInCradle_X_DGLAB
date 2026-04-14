@@ -1,4 +1,4 @@
-// PlayerStatusController.cs
+	// PlayerStatusController.cs
 using System;
 using HarmonyLib;
 
@@ -9,7 +9,7 @@ namespace AliceInCradle
         private readonly ConfigManager _config;
         private readonly DGLabApiClient _apiClient;
         private readonly BepInEx.Logging.ManualLogSource _logger;
-        // ×´Ì¬×·×Ù±äÁ¿
+        // çŠ¶æ€è¿½è¸ªå˜é‡
         private int? _previousHp = null;
         private int? _previousMp = null;
         private int? _previousEp = null;
@@ -27,38 +27,38 @@ namespace AliceInCradle
             _apiClient = apiClient;
             _logger = logger;
         }
-        // ºËĞÄÂß¼­´¦Àí
+        // æ ¸å¿ƒé€»è¾‘å¤„ç†
         public void ProcessPlayerStatusUpdate(GameComponentManager components)
         {
 
             if (components == null || !components.AreComponentsReady())
             {
-                // Èç¹û´«ÈëµÄ×é¼ş¹ÜÀíÆ÷±¾ÉíÊÇ null »òÕß×é¼ş²»ÍêÕû£¬Ö±½Ó·µ»Ø
+                // å¦‚æœä¼ å…¥çš„ç»„ä»¶ç®¡ç†å™¨æœ¬èº«æ˜¯ null æˆ–è€…ç»„ä»¶ä¸å®Œæ•´ï¼Œç›´æ¥è¿”å›
                 return;
             }
 
 
-            // »ñÈ¡µ±Ç°Íæ¼Ò×´Ì¬
+            // è·å–å½“å‰ç©å®¶çŠ¶æ€
             var (hp, hpMax) = GetHp(components);
             var (mp, mpMax) = GetMp(components);
             var ep = Traverse.Create(components.EpComponent).Field("ep").GetValue<int>();
             var orgasmCount = components.PrComponent.EpCon.getOrgasmedTotal();
 
-            // ´¦Àí×´Ì¬±ä»¯
+            // å¤„ç†çŠ¶æ€å˜åŒ–
             ProcessHpChange(hp, hpMax);
             ProcessMpChange(mp, mpMax);
             ProcessEpChange(ep);
             ProcessOrgasmChange(orgasmCount);
             ProcessOrgasmCooldown();
-            ProcessIdleStrengthReduction();
+            ProcessIdleStrengthReduction(ep);
 
-            // ¸üĞÂÉÏÒ»´ÎµÄ×´Ì¬
+            // æ›´æ–°ä¸Šä¸€æ¬¡çš„çŠ¶æ€
             _previousHp = hp;
             _previousMp = mp;
             _previousEp = ep;
             _previousOr = orgasmCount;
         }
-        // HP»ñÈ¡
+        // HPè·å–
         private (int, int) GetHp(GameComponentManager components)
         {
             if (_config.FireMode.Value == 0 && components.HpComponentAttackable != null)
@@ -75,7 +75,7 @@ namespace AliceInCradle
             }
             return (0, 0);
         }
-        // MP»ñÈ¡
+        // MPè·å–
         private (int, int) GetMp(GameComponentManager components)
         {
             if (components.PrNoelComponent != null)
@@ -86,37 +86,37 @@ namespace AliceInCradle
             }
             return (0, 0);
         }
-        // HP±ä»¯¼ì²âÓë´¦Àí
+        // HPå˜åŒ–æ£€æµ‹ä¸å¤„ç†
         private void ProcessHpChange(int currentHp, int maxHp)
         {
             if (_previousHp == null) _previousHp = maxHp;
 
             int difference = currentHp - _previousHp.Value;
 
-            //_logger.LogInfo($"Íæ¼Ò±ä»¯ÁË {Math.Abs(difference)} µã HP¡£");
+            //_logger.LogInfo($"ç©å®¶å˜åŒ–äº† {Math.Abs(difference)} ç‚¹ HPã€‚");
 
-            if (difference > 10 && difference < _config.MaxChange.Value) // Ôö¼ÓÑªÁ¿
+            if (difference > 10 && difference < _config.MaxChange.Value) // å¢åŠ è¡€é‡
             {
                 _apiClient.SendStrengthUpdateAsync(sub: Math.Abs(difference)).ConfigureAwait(false);
             }
-            else if (difference < 0 && difference > ADD_CHANGE_LIMIT) // ¼õÉÙÑªÁ¿
+            else if (difference < 0 && difference > ADD_CHANGE_LIMIT) // å‡å°‘è¡€é‡
             {
                 int addAmount = Math.Abs((int)Math.Ceiling(difference * _config.HpReductionMultiplier.Value));
                 _apiClient.SendStrengthUpdateAsync(add: addAmount).ConfigureAwait(false);
             }
         }
-        // MP±ä»¯¼ì²âÓë´¦Àí
+        // MPå˜åŒ–æ£€æµ‹ä¸å¤„ç†
         private void ProcessMpChange(int currentMp, int maxMp)
         {
             if (_previousMp == null) _previousMp = maxMp;
 
             int difference = currentMp - _previousMp.Value;
 
-            if (difference > 20 && difference < _config.MaxChange.Value) // Ôö¼ÓMP
+            if (difference > 20 && difference < _config.MaxChange.Value) // å¢åŠ MP
             {
                 _apiClient.SendStrengthUpdateAsync(sub: Math.Abs(difference)).ConfigureAwait(false);
             }
-            else if (difference < 0 && difference > ADD_CHANGE_LIMIT) // ¼õÉÙMP
+            else if (difference < 0 && difference > ADD_CHANGE_LIMIT) // å‡å°‘MP
             {
                 bool specialCondition = difference <= -1 && difference > -10 && _config.Lowest.Value != 0 && _epFlag;
 
@@ -140,7 +140,7 @@ namespace AliceInCradle
                 }
             }
         }
-        // EP±ä»¯¼ì²âÓë´¦Àí
+        // EPå˜åŒ–æ£€æµ‹ä¸å¤„ç†
         private void ProcessEpChange(int currentEp)
         {
             if (_previousEp == null) _previousEp = currentEp;
@@ -153,7 +153,7 @@ namespace AliceInCradle
                 _apiClient.SendStrengthUpdateAsync(add: addAmount).ConfigureAwait(false);
             }
         }
-        // ¸ß³±¼ì²âÓë´¦Àí
+        // é«˜æ½®æ£€æµ‹ä¸å¤„ç†
         private void ProcessOrgasmChange(int currentOrgasmCount)
         {
             if (_previousOr == null) _previousOr = currentOrgasmCount;
@@ -167,7 +167,7 @@ namespace AliceInCradle
                 _orgasmDurationTimer = DateTime.UtcNow;
             }
         }
-        // ¸ß³±ºóµÄÀäÈ´´¦Àí
+        // é«˜æ½®åçš„å†·å´å¤„ç†
         private void ProcessOrgasmCooldown()
         {
             if (_orgasmFlag && (DateTime.UtcNow - _orgasmDurationTimer > TimeSpan.FromMilliseconds(_config.HoldMs.Value)))
@@ -177,13 +177,16 @@ namespace AliceInCradle
             }
         }
 
-        // ¿ÕÏĞÊ±µÄÇ¿¶È¼õÉÙ
-        private void ProcessIdleStrengthReduction()
+        // ç©ºé—²æ—¶çš„å¼ºåº¦å‡å°‘
+        private void ProcessIdleStrengthReduction(int currentEp)
         {
+            int EPValue = currentEp;
+            int addAmount = Math.Abs((int)Math.Round(EPValue * _config.EpReductionRateMultiplier.Value / 10));
+            int Reduce = Math.Abs((int)_config.ReductionValue.Value) - addAmount;
             if (DateTime.UtcNow - _strengthReductionTimer > TimeSpan.FromMilliseconds(_config.CheckIntervalMs.Value))
             {
                 _strengthReductionTimer = DateTime.UtcNow;
-                _apiClient.SendStrengthUpdateAsync(sub: _config.ReductionValue.Value).ConfigureAwait(false);
+                _apiClient.SendStrengthUpdateAsync(sub: Reduce).ConfigureAwait(false);
             }
         }
     }
