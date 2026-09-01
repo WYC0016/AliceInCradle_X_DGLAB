@@ -14,7 +14,7 @@ namespace AliceInCradle
         // 用于临时存储输入框内容的字符串变量
         private string _heroStr, _holdMsStr, _eroHStr;
         private string _hpMultiplierStr, _mpMultiplierStr, _epMultiplierStr, _epRateMultiplierStr;
-        private string _maxChangeStr, _checkIntervalStr, _reductionValueStr, _lowestStr;
+        private string _maxChangeStr, _checkIntervalStr, _reductionValueStr, _increasingmaxStr, _lowestStr;
 
         public UIManager(ConfigManager config)
         {
@@ -30,6 +30,7 @@ namespace AliceInCradle
             _maxChangeStr = config.MaxChange.Value.ToString();
             _checkIntervalStr = config.CheckIntervalMs.Value.ToString();
             _reductionValueStr = config.ReductionValue.Value.ToString();
+            _increasingmaxStr = _config.IncreasingMaximum.Value.ToString();
             _lowestStr = config.Lowest.Value.ToString();
         }
 
@@ -70,6 +71,7 @@ namespace AliceInCradle
             GUILayout.Label("强度自然衰减");
             DrawIntField("衰减间隔(ms):", ref _checkIntervalStr, _config.CheckIntervalMs);
             DrawIntField("每次衰减值:", ref _reductionValueStr, _config.ReductionValue);
+            DrawIntField("自然增长上限:", ref _increasingmaxStr, _config.IncreasingMaximum);
             GUILayout.Space(15);
 
             // --- 实验性功能 ---

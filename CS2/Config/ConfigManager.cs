@@ -18,6 +18,7 @@ namespace AliceInCradle
         public ConfigEntry<int> MaxChange { get; private set; }
         public ConfigEntry<int> CheckIntervalMs { get; private set; }
         public ConfigEntry<int> ReductionValue { get; private set; }
+        public ConfigEntry<int> IncreasingMaximum { get; private set; }
         public ConfigEntry<int> Lowest { get; private set; }
         public ConfigEntry<KeyCode> ToggleUiKey { get; private set; }
 
@@ -44,7 +45,7 @@ namespace AliceInCradle
             // --- 强度自然衰减 ---
             CheckIntervalMs = config.Bind("4. 强度衰减", "衰减间隔 (ms)", 1000, "无事件发生时，每隔多少毫秒减少一次强度。");
             ReductionValue = config.Bind("4. 强度衰减", "每次衰减值", 3, "每次衰减时减少的强度值。");
-
+            IncreasingMaximum = config.Bind("4. 强度衰减", "强度自然增长上限", 10, "EP高时强度随时间增长的最大值。");
             // --- 实验性功能 ---
             Lowest = config.Bind("5. 实验性", "(已废弃)最低增强值", 0, "现已被兴奋度系统取代。如需使用会和兴奋度叠加。设为0关闭。");
 

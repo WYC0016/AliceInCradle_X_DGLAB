@@ -15,6 +15,11 @@ namespace AliceInCradle
         private readonly BepInEx.Logging.ManualLogSource _logger;
         private const string BASE_URL = "http://127.0.0.1:8920/";
         private const string CLIENT_ID = "all";
+        public int CurrentStrength { get; private set; } = 0;
+        public void SetStrengthFromHub(int value)
+        {
+            CurrentStrength = value;
+        }
 
         public DGLabApiClient(ManualLogSource logger)
         {

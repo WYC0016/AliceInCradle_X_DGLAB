@@ -1,5 +1,6 @@
 	// PlayerStatusController.cs
 using System;
+using System.ComponentModel;
 using HarmonyLib;
 
 namespace AliceInCradle
@@ -19,7 +20,6 @@ namespace AliceInCradle
         private bool _orgasmFlag = false;
         private DateTime _orgasmDurationTimer;
         private DateTime _strengthReductionTimer;
-
         private const int ADD_CHANGE_LIMIT = -1000;
         public PlayerStatusController(ConfigManager config, DGLabApiClient apiClient, BepInEx.Logging.ManualLogSource logger)
         {
@@ -183,10 +183,14 @@ namespace AliceInCradle
             int EPValue = currentEp;
             int addAmount = Math.Abs((int)Math.Round(EPValue * _config.EpReductionRateMultiplier.Value / 10));
             int Reduce = Math.Abs((int)_config.ReductionValue.Value) - addAmount;
-            if (DateTime.UtcNow - _strengthReductionTimer > TimeSpan.FromMilliseconds(_config.CheckIntervalMs.Value))
+            // _logger.LogInfo($"强度调试: 当前={CoyoteStatusMonitor.CurrentStrength}, 上限={_config.IncreasingMaximum.Value}, Reduce={Reduce}");
+            if ((CoyoteStatusMonitor.CurrentStrength < _config.IncreasingMaximum.Value) || (Reduce > 0))
             {
-                _strengthReductionTimer = DateTime.UtcNow;
-                _apiClient.SendStrengthUpdateAsync(sub: Reduce).ConfigureAwait(false);
+                if (DateTime.UtcNow - _strengthReductionTimer > TimeSpan.FromMilliseconds(_config.CheckIntervalMs.Value))
+                {
+                    _strengthReductionTimer = DateTime.UtcNow;
+                    _apiClient.SendStrengthUpdateAsync(sub: Reduce).ConfigureAwait(false);
+                }
             }
         }
     }
