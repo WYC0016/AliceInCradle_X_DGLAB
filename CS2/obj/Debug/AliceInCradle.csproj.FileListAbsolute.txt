@@ -17,10 +17,10 @@ E:\AAACode\AliceInCradle_ver027\BepInEx\plugins\AliceInCradleXDGLAB.pdb
 E:\AAACode\DGLAB\cs2\obj\Debug\AliceInC.76D77E87.Up2Date
 E:\AAACode\DGLAB\cs2\obj\Debug\AliceInCradleXDGLAB.dll
 E:\AAACode\DGLAB\cs2\obj\Debug\AliceInCradleXDGLAB.pdb
-c:\Users\C\Documents\Tencent Files\1970482859\MobileFile\9c201hdi387fke3cxsdi8796c9407i3k\AliceInCradle Win ver030\AliceInCradle_X_DGLAB-main\CS2\obj\Debug\AliceInCradleXDGLAB.dll
-c:\Users\C\Documents\Tencent Files\1970482859\MobileFile\9c201hdi387fke3cxsdi8796c9407i3k\AliceInCradle Win ver030\AliceInCradle_X_DGLAB-main\CS2\obj\Debug\AliceInCradleXDGLAB.pdb
-C:\Users\C\Documents\Tencent Files\1970482859\MobileFile\9c201hdi387fke3cxsdi8796c9407i3k\AliceInCradle Win ver030\AliceInCradle_ver030\BepInEx\plugins\AliceInCradleXDGLAB.dll.config
-C:\Users\C\Documents\Tencent Files\1970482859\MobileFile\9c201hdi387fke3cxsdi8796c9407i3k\AliceInCradle Win ver030\AliceInCradle_ver030\BepInEx\plugins\AliceInCradleXDGLAB.dll
-C:\Users\C\Documents\Tencent Files\1970482859\MobileFile\9c201hdi387fke3cxsdi8796c9407i3k\AliceInCradle Win ver030\AliceInCradle_ver030\BepInEx\plugins\AliceInCradleXDGLAB.pdb
-C:\Users\C\Documents\Tencent Files\1970482859\MobileFile\9c201hdi387fke3cxsdi8796c9407i3k\AliceInCradle Win ver030\AliceInCradle_X_DGLAB-main\CS2\obj\Debug\AliceInCradle.csproj.AssemblyReference.cache
-C:\Users\C\Documents\Tencent Files\1970482859\MobileFile\9c201hdi387fke3cxsdi8796c9407i3k\AliceInCradle Win ver030\AliceInCradle_X_DGLAB-main\CS2\obj\Debug\AliceInCradle.csproj.CoreCompileInputs.cache
+AliceInCradle Win ver030\AliceInCradle_X_DGLAB-main\CS2\obj\Debug\AliceInCradleXDGLAB.dll
+AliceInCradle Win ver030\AliceInCradle_X_DGLAB-main\CS2\obj\Debug\AliceInCradleXDGLAB.pdb
+AliceInCradle Win ver030\AliceInCradle_ver030\BepInEx\plugins\AliceInCradleXDGLAB.dll.config
+AliceInCradle Win ver030\AliceInCradle_ver030\BepInEx\plugins\AliceInCradleXDGLAB.dll
+AliceInCradle Win ver030\AliceInCradle_ver030\BepInEx\plugins\AliceInCradleXDGLAB.pdb
+AliceInCradle Win ver030\AliceInCradle_X_DGLAB-main\CS2\obj\Debug\AliceInCradle.csproj.AssemblyReference.cache
+AliceInCradle Win ver030\AliceInCradle_X_DGLAB-main\CS2\obj\Debug\AliceInCradle.csproj.CoreCompileInputs.cache
